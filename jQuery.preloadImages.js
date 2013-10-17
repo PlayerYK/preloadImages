@@ -1,6 +1,7 @@
 // Usage: $(['img1.jpg','img2.jpg']).preloadImages([handler(isSucceed,finishedCount,len,src)[,handler(succeedCount,len)]]);
 // oneCallback(finishedNumber,totalNumber,src) function gets called after each image is preloaded
 // allCallback function gets called after all images are preloaded
+// author: kamal.yu@gmail.com
 $.fn.preloadImages = function(oneCallback,allCallback) {
     oneCallback = oneCallback || $.noop();
     allCallback = allCallback || $.noop();
