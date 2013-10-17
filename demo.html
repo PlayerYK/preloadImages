@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Pre-load images demo</title>
+    <style type="text/css">
+        html,body{
+            background:#1E1E1E;
+            font-family:"Microsoft YaHei",sans-serif;
+        }
+        #loading_area{
+            background-color:#2c3e50;
+            position:absolute;
+            z-index:10;
+            top:0;
+            right:0;
+            bottom:0;
+            left:0;
+        }
+        #progress{
+            height:200px;
+            width:0;
+            position:absolute;
+            top:50%;
+            left:0;
+            margin-top:-100px;
+            background-color:#f39c12;
+        }
+        #num{
+            height:200px;
+            width:400px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-left:-200px;
+            margin-top:-100px;
+            line-height:200px;
+            font-size:64px; 
+            text-align:center;
+        }
+        #gallery{
+            overflow:hidden;
+        }
+        #gallery li{
+            width:200px;
+            height:200px;
+            float:left;
+            margin:10px;
+            list-style:none;
+        }
+        #gallery li img{
+            max-height:200px;
+            max-width:200px;
+        }
+        #summary{
+            font-size:20px;
+            display:none;
+            color:white;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading_area">
+        <div id="progress"></div>
+        <div id="num"></div>
+    </div>
+    
+    <ul id="gallery"></ul>
+    <div id="summary"></div>
+    
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="jQuery.preloadImages.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var imgList = [
+                'http://farm6.staticflickr.com/5506/10298937444_bd8382472f_k.jpg'
+                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-1001737.jpg'
+                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-889112.jpg'
+                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-1075014.jpg'
+                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-998251.jpg'
+                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-1075033.jpg'
+                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-1075024.jpg'
+                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-707895.jpg'
+                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-832807.jpg'
+                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-560427.jpg'
+                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-52419.jpg'
+                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-326020.jpg'
+            ];
+            var galleryHtml = '';
+            $(imgList).preloadImages(function(isSucceed,finishedCount,len,src){
+                var per = parseInt((finishedCount / len) * 100) ;
+                $('#num').text(finishedCount + ' / '+len);
+                $('#progress').css({width:per+'%'});
+                if(isSucceed){
+                    galleryHtml+='<li><a target="_blank" href="'+src+'"><img src="'+src+'" alt=""/></a></li>';
+                }                
+            },function(succeedCount,len){
+                $('#gallery').html(galleryHtml);
+                $('#summary').text('Total: '+len+' Succeed: '+succeedCount).show();
+                setTimeout(function(){
+                    $('#loading_area').fadeOut('slow');
+                },2000)
+            })
+        })
+    </script>
+</body>
+</html>
