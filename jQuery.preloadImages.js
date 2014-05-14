@@ -3,8 +3,8 @@
 // allCallback function gets called after all images are preloaded
 // author: kamal.yu@gmail.com
 $.fn.preloadImages = function(oneCallback,allCallback) {
-    oneCallback = oneCallback || $.noop();
-    allCallback = allCallback || $.noop();
+    oneCallback = typeof oneCallback === 'function'?oneCallback: $.noop;
+    allCallback = typeof allCallback === 'function'?oneCallback: $.noop;
     var len = this.length;
     var finishedCount = 0;
     var succeedCount = 0;
