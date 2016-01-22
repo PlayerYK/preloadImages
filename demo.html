@@ -71,37 +71,32 @@
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="jQuery.preloadImages.js"></script>
     <script type="text/javascript">
+        // load image
         $(function(){
             var imgList = [
-                'http://farm6.staticflickr.com/5506/10298937444_bd8382472f_k.jpg'
-                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-1001737.jpg'
-                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-889112.jpg'
-                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-1075014.jpg'
-                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-998251.jpg'
-                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-1075033.jpg'
-                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-1075024.jpg'
-                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-707895.jpg'
-                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-832807.jpg'
-                ,'http://wallpapers.wallbase.cc/rozne/wallpaper-560427.jpg'
-                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-52419.jpg'
-                ,'http://wallpapers.wallbase.cc/high-resolution/wallpaper-326020.jpg'
+                '/1636/23897153233_f739564c7b_z.jpg'
+                ,'/1694/23895290914_e476b0d7f9_c.jpg'
+                ,'/1489/24227936410_302a066d8f.jpg'
+                ,'/1557/24155083299_b4b51ea298_b.jpg'
+                ,'/1498/23893023944_05d412fd04_z.jpg'
+                ,'/1637/24224651300_b0d81c98b9_z.jpg'
             ];
             var galleryHtml = '';
-            $(imgList).preloadImages(function(isSucceed,finishedCount,len,src){
+            $(imgList).preloadImages(function(succeedCount,len){
+                $('#gallery').html(galleryHtml);
+                $('#summary').text('Total: '+len+' Succeed: '+succeedCount).show();
+                setTimeout(function(){
+                    $('#loading_area').fadeOut('slow');
+                },2000);
+            },function(isSucceed,finishedCount,len,src){
                 var per = parseInt((finishedCount / len) * 100) ;
                 $('#num').text(finishedCount + ' / '+len);
                 $('#progress').css({width:per+'%'});
                 if(isSucceed){
                     galleryHtml+='<li><a target="_blank" href="'+src+'"><img src="'+src+'" alt=""/></a></li>';
-                }                
-            },function(succeedCount,len){
-                $('#gallery').html(galleryHtml);
-                $('#summary').text('Total: '+len+' Succeed: '+succeedCount).show();
-                setTimeout(function(){
-                    $('#loading_area').fadeOut('slow');
-                },2000)
-            })
-        })
+                }
+            },'//c2.staticflickr.com/2');
+        });
     </script>
 </body>
 </html>

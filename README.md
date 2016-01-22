@@ -3,16 +3,20 @@ preloadImages
 
 jQuery preloadImages
 
-Online Demo: http://jsbin.com/AdacIfI/1
+Online Demo: http://jsbin.com/AdacIfI/2
 
 Usage:
 
-    $(['img1.jpg','img2.jpg']).preloadImages([handler(isSucceed,finishedCount,len,src)[,handler(succeedCount,len)]]);
+    $(['img1.jpg','img2.jpg']).preloadImages([allCallback(succeedCount,len)
+    [,oneCallback(isSucceed,finishedCount,len,src),
+    [urlPadding]]]);
 
+eg.
 
     var imgList = ['img1.jpg','img2.jpg'];
-    $(imgList).preloadImages(function(isSucceed,finishedCount,len,src){
-            // one image finished, succeed or failed ...              
-        },function(succeedCount,len){
-            // all images finished ...
-        })
+    var urlPadding = 'http://my.custom.domain/';
+    $(imgList).preloadImages(function(succeedCount,len){
+        // all images finished ...
+    },function(isSucceed,finishedCount,len,src){
+        // one image finished, succeed or failed ...
+    },urlPadding)

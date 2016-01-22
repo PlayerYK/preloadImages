@@ -1,17 +1,21 @@
-// Usage: $(['img1.jpg','img2.jpg']).preloadImages([handler(isSucceed,finishedCount,len,src)[,handler(succeedCount,len)]]);
-// oneCallback(finishedNumber,totalNumber,src) function gets called after each image is preloaded
-// allCallback function gets called after all images are preloaded
-// author: kamal.yu@gmail.com
-$.fn.preloadImages = function(oneCallback,allCallback) {
+/**
+ * image preload
+ * @param allCallback function oneCallback(isSucceed,finishedCount,len,src) called after each image is preloaded
+ * @param oneCallback function allCallback(succeedCount,len) called after all images are preloaded
+ * @param urlPadding string if set, pre-padding to each image url
+ * @author kamal.yu@gmail.com
+ * @update 2016-1-21
+ */
+$.fn.preloadImages = function(allCallback,oneCallback,urlPadding) {
     oneCallback = typeof oneCallback === 'function'?oneCallback: $.noop;
-    allCallback = typeof allCallback === 'function'?oneCallback: $.noop;
+    allCallback = typeof allCallback === 'function'?allCallback: $.noop;
     var len = this.length;
     var finishedCount = 0;
     var succeedCount = 0;
     var completeLoading = function(src,isSucceed){
         finishedCount++;
         if(isSucceed){
-            succeedCount++
+            succeedCount++;
         }
         oneCallback(isSucceed,finishedCount,len,src);
         
@@ -21,6 +25,9 @@ $.fn.preloadImages = function(oneCallback,allCallback) {
     };
     this.each(function() {
         var _this = this;
+        if(urlPadding && typeof urlPadding == 'string'){
+            _this = urlPadding + _this;
+        }
         var imgLoad = new Image();
         $(imgLoad)
             .load(function() {
